@@ -32,6 +32,11 @@ describe Game do
     expect {game.insert(player1_symbol, 2, -1)}.to raise_error "choose a number between 0-2"
   end
 
+  it "raises error if place already taken" do
+    game.insert(player1_symbol, 2, 2)
+    expect { game.insert(player1_symbol, 2, 2) }.to raise_error "place already taken, try another!"
+  end
+
   it "finished? on an incomplete game returns false" do
     expect(game.finished?).to be false
   end
@@ -47,6 +52,62 @@ describe Game do
     game.insert(player1_symbol, 2, 1)
     game.insert(player1_symbol, 2, 2)
     expect(game.finished?).to be true
+  end
+
+  it "checks for a win top row" do
+    game.insert(player1_symbol, 0, 0)
+    game.insert(player1_symbol, 0, 1)
+    game.insert(player1_symbol, 0, 2)
+    expect(game.winner?).to be true
+  end
+
+  it "checks for a win middle row" do
+    game.insert(player1_symbol, 1, 0)
+    game.insert(player1_symbol, 1, 1)
+    game.insert(player1_symbol, 1, 2)
+    expect(game.winner?).to be true
+  end
+
+  it "checks for a win bottom row" do
+    game.insert(player1_symbol, 2, 0)
+    game.insert(player1_symbol, 2, 1)
+    game.insert(player1_symbol, 2, 2)
+    expect(game.winner?).to be true
+  end
+
+  it "checks for a win left col" do
+    game.insert(player1_symbol, 0, 0)
+    game.insert(player1_symbol, 1, 0)
+    game.insert(player1_symbol, 2, 0)
+    expect(game.winner?).to be true
+  end
+
+  it "checks for a win middle col" do
+    game.insert(player1_symbol, 0, 1)
+    game.insert(player1_symbol, 1, 1)
+    game.insert(player1_symbol, 2, 1)
+    expect(game.winner?).to be true
+  end
+
+  it "checks for a win right col" do
+    game.insert(player1_symbol, 0, 2)
+    game.insert(player1_symbol, 1, 2)
+    game.insert(player1_symbol, 2, 2)
+    expect(game.winner?).to be true
+  end
+
+  it "checks for a win negative diagonal" do
+    game.insert(player1_symbol, 0, 0)
+    game.insert(player1_symbol, 1, 1)
+    game.insert(player1_symbol, 2, 2)
+    expect(game.winner?).to be true
+  end
+
+  it "checks for a win positive diagonal" do
+    game.insert(player1_symbol, 2, 0)
+    game.insert(player1_symbol, 1, 1)
+    game.insert(player1_symbol, 0, 2)
+    expect(game.winner?).to be true
   end
 
 end
