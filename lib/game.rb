@@ -15,7 +15,7 @@ class Game
   end
 
   def finished?
-    !grid.any? { |row| row.include?(nil) } 
+    !grid.any? { |row| row.include?(nil) }
   end
 
   def winner?
