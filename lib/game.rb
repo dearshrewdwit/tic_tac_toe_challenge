@@ -99,59 +99,43 @@ class Game
   private
 
   def check_all_rows
-    check_row(0) || check_row(1) || check_row(2)
-  end
-
-  def check_row(row_number)
-    grid[row_number].uniq.length == 1 && !grid[row_number].include?(nil)
+    check(grid[0]) || check(grid[1]) || check(grid[2])
   end
 
   def check_all_columns
-    check_column(0) || check_column(1) || check_column(2)
+    check(get_column(0)) || check(get_column(1)) || check(get_column(2))
   end
 
   def get_column(col_number)
-    array = []
-    array << grid[0][col_number]
-    array << grid[1][col_number]
-    array << grid[2][col_number]
-    array
-  end
-
-  def check_column(col_number)
-    array = []
-    array << grid[0][col_number]
-    array << grid[1][col_number]
-    array << grid[2][col_number]
-    array.uniq.length == 1 && !array.include?(nil)
+    grid.map { |row| row[col_number] }
   end
 
   def get_negative_diagonal
+    counter = 0
     array = []
-    array << grid[0][0]
-    array << grid[1][1]
-    array << grid[2][2]
+    grid.each do |row|
+      array << row[counter]
+      counter += 1
+    end
     array
   end
 
   def get_positive_diagonal
-    array2 = []
-    array2 << grid[2][0]
-    array2 << grid[1][1]
-    array2 << grid[0][2]
-    array2
+    counter = grid.length-1
+    array = []
+    grid.each do |row|
+      array << row[counter]
+      counter -= 1
+    end
+    array.reverse
   end
 
   def check_all_diagonals
-    array = []
-    array << grid[0][0]
-    array << grid[1][1]
-    array << grid[2][2]
-    array2 = []
-    array2 << grid[2][0]
-    array2 << grid[1][1]
-    array2 << grid[0][2]
-    array.uniq.length == 1 && !array.include?(nil) || array2.uniq.length == 1 && !array2.include?(nil)
+    check(get_negative_diagonal) || check(get_positive_diagonal)
+  end
+
+  def check(type)
+    type.uniq.length == 1 && !type.include?(nil)
   end
 
   def invalid_number?(row, column)

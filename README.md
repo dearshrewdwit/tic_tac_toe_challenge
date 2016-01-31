@@ -10,3 +10,7 @@ Further instructions:
   - This can be playable in any form.  It can be a command line application, a web application, etc.
   - There isn't a deadline.
   - Send a link to the Github repo when you are finished.
+
+ - change condition for Player v computer player, have as attribute not class type
+ - refactor computer move methods
+ - feature tests

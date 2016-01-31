@@ -13,7 +13,7 @@ describe GameManager do
       game.play(0,0)
       game.play(1,1)
       game.play(0,2)
-      game.play(0,2)
+      game.play(1,2)
       expect(game.play(0,1)).to eq "x has won!"
     end
     it "o moves first" do
@@ -22,7 +22,7 @@ describe GameManager do
       game.play(0,0)
       game.play(1,1)
       game.play(0,2)
-      game.play(0,2)
+      game.play(1,2)
       expect(game.play(0,1)).to eq "o has won!"
     end
   end
@@ -33,12 +33,20 @@ describe GameManager do
       game.set_player_one(:x, Player)
       game.play(0,0)
       game.play
+      game.play(2,0)
       game.play
+      game.play(0,1)
+      expect(game.play).to eq "o has won!"
     end
 
     it "computer moves first" do
       game.set_game_type(3)
-      game.set_player_one(:x, Player)
+      game.set_player_one(:x, ComputerPlayer)
+      game.play
+      game.play(1,0)
+      game.play
+      game.play(0,1)
+      expect(game.play).to eq "x has won!"
     end
 
   end
@@ -47,10 +55,14 @@ describe GameManager do
     it "x moves first" do
       game.set_game_type(2)
       game.set_player_one(:x, ComputerPlayer)
+      8.times { game.play }
+      expect(game.play).to eq "game over"
     end
     it "o moves first" do
       game.set_game_type(2)
       game.set_player_one(:o, ComputerPlayer)
+      8.times { game.play }
+      expect(game.play).to eq "game over"
     end
   end
 
