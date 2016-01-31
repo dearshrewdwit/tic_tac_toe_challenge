@@ -9,7 +9,7 @@ Instructions for use:
 - `cd` into the directory
 - run `bundle`
 - run `rspec` to see tests
-- run `irb` or `pry` from project directory to play Tic-Tac-Toe:
+- run `irb` or `pry` from project directory and then require the main file to play Tic-Tac-Toe:
 
 ```ruby
 $ pry
@@ -17,7 +17,7 @@ $ pry
 > tic_tac_toe = GameManager.new
 ```
 RULES
----=
+---
 For every new game:
 1. set game type
   - 1 = human v human
