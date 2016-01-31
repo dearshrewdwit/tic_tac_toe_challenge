@@ -19,6 +19,7 @@ $ pry
 RULES
 ---
 For every new game:
+
 1. set game type
   - 1 = human v human
   - 2 = computer v computer
