@@ -11,6 +11,9 @@ describe GameManager do
 
   subject(:tic_tac_toe) { described_class.new(game_klass, player_klass, computer_player_klass) }
 
+  it "initializes with a set of symbols" do
+    expect(tic_tac_toe.symbols).to eq [:x, :o]
+  end
   it  "can set game type, error less than 0" do
     expect { tic_tac_toe.set_game_type(-1) }.to raise_error "invalid game type (1,2,3)"
   end

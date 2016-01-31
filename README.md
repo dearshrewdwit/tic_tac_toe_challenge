@@ -26,7 +26,7 @@ For every new game:
   - 3 = human v computer
 2. set who moves first
   - either `:x` or `:o`
-  - and whether you want the computer to move first
+  - and whether you want the `Player` or `ComputerPlayer` to move first
 3. Play the game!
   - to make a human move, pass in two arguments: `tic_tac_toe.play(row, column)` where row and column are indexed at 0
     - top left is thus `tic_tac_toe.play(0,0)`

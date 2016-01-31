@@ -26,72 +26,42 @@ class Game
     grid.map { |r| r.join(' | ') }.insert(1, '---------').insert(3, '---------').each { |r| puts r }
   end
 
+  def has_possible_win?(array, symbol)
+    array.count(symbol) == 2 && array.include?(nil)
+  end
+
   def find_move(symbol)
-    move = []
+    move = nil
     grid.each do |row|
-      if row.count(symbol) == 2 && row.include?(nil) && move.empty?
-        move << grid.index(row)
-        move << row.index(nil)
-      end
+      move ||= [grid.index(row),row.index(nil)] if has_possible_win?(row, symbol)
     end
-    if get_column(0).count(symbol) == 2 && get_column(0).include?(nil) && move.empty?
-      move << get_column(0).index(nil)
-      move << 0
-    elsif get_column(1).count(symbol) == 2 && get_column(1).include?(nil) && move.empty?
-      move << get_column(1).index(nil)
-      move << 1
-    elsif get_column(2).count(symbol) == 2 && get_column(2).include?(nil) && move.empty?
-      move << get_column(2).index(nil)
-      move << 2
-    elsif
-      get_negative_diagonal.count(symbol) == 2 && get_negative_diagonal.include?(nil) && move.empty?
-      if get_negative_diagonal.index(nil) == 0
-        move << get_negative_diagonal.index(nil)
-        move << 0
-      elsif get_negative_diagonal.index(nil) == 1
-        move << get_negative_diagonal.index(nil)
-        move << 1
-      elsif get_negative_diagonal.index(nil) == 2
-        move << get_negative_diagonal.index(nil)
-        move << 2
-      end
-    elsif
-      get_positive_diagonal.count(symbol) == 2 && get_negative_diagonal.include?(nil) && move.empty?
-      if get_positive_diagonal.index(nil) == 0
-        move << 2
-        move << get_positive_diagonal.index(nil)
-      elsif get_positive_diagonal.index(nil) == 1
-        move << 1
-        move << get_positive_diagonal.index(nil)
-      elsif get_positive_diagonal.index(nil) == 2
-        move << 0
-        move << get_positive_diagonal.index(nil)
-      end
+    move ||= [get_column(0).index(nil), 0] if has_possible_win?(get_column(0), symbol)
+    move ||= [get_column(1).index(nil), 1] if has_possible_win?(get_column(1), symbol)
+    move ||= [get_column(2).index(nil), 2] if has_possible_win?(get_column(2), symbol)
+
+    if has_possible_win?(get_negative_diagonal, symbol)
+      move ||= [0, 0] if get_negative_diagonal.index(nil) == 0
+      move ||= [1, 1] if get_negative_diagonal.index(nil) == 1
+      move ||= [2, 2] if get_negative_diagonal.index(nil) == 2
     end
-    move.empty? ? nil : move
+
+    if has_possible_win?(get_positive_diagonal, symbol)
+      move ||= [2, 0] if get_positive_diagonal.index(nil) == 0
+      move ||= [1, 1] if get_positive_diagonal.index(nil) == 1
+      move ||= [0, 2] if get_positive_diagonal.index(nil) == 2
+    end
+    move
   end
 
   def get_next_available_move
-    move = []
-    if grid[1][1].nil? && move.empty?
-      2.times { move << 1 }
-    elsif grid[0][0].nil? && move.empty?
-      2.times { move << 0 }
-    elsif grid[0][2].nil? && move.empty?
-      move << 0
-      move << 2
-    elsif grid[2][0].nil? && move.empty?
-      move << 2
-      move << 0
-    elsif grid[2][2].nil? && move.empty?
-      2.times { move << 2 }
-    elsif move.empty?
-      grid.each do |row|
-        if row.include?(nil) && move.empty?
-          move << grid.index(row)
-          move << row.index(nil)
-        end
-      end
+    move = nil
+    move ||= [1,1] if grid[1][1].nil?
+    move ||= [0,0] if grid[0][0].nil?
+    move ||= [0,2] if grid[0][2].nil?
+    move ||= [2,0] if grid[2][0].nil?
+    move ||= [2,2] if grid[2][2].nil?
+    grid.each do |row|
+      move ||= [grid.index(row), row.index(nil)] if row.include?(nil)
     end
     move
   end
@@ -139,7 +109,7 @@ class Game
   end
 
   def invalid_number?(row, column)
-    row < 0 || column < 0 || row > 2 || column > 2
+    row < 0 || column < 0 || row > grid.length-1 || column > grid.length-1
   end
 
   def already_taken?(row, column)
