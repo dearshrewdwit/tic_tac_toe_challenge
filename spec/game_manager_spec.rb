@@ -3,8 +3,8 @@ require 'game_manager'
 describe GameManager do
 
   let(:game) { double( insert: true) }
-  let(:player_one) { double() }
-  let(:computer_player) { double() }
+  let(:player_one) { double( symbol: :x) }
+  let(:computer_player) { double( symbol: :x) }
 
   let(:game_klass) { double( new: game) }
   let(:player_klass) { double( new: player_one) }
@@ -22,7 +22,7 @@ describe GameManager do
     expect(tic_tac_toe.player1).to eq computer_player
   end
 
-  
+
 
 
 end

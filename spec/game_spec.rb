@@ -134,5 +134,24 @@ describe Game do
     expect(game.find_move(:x)).to eq [0, 2]
   end
 
+  it "if no win, return middle" do
+    expect(game.get_next_available_move).to eq [1, 1]
+  end
+
+  it "if no win, no middle, return a corner" do
+    game.insert(:x, 1, 1)
+    expect(game.get_next_available_move).to eq [0, 0]
+  end
+
+  it "if no win, no middle, no corner, return next move" do
+    game.insert(:o, 2, 0)
+    game.insert(:o, 0, 2)
+    game.insert(:o, 0, 0)
+    game.insert(:o, 2, 2)
+    game.insert(:x, 1, 1)
+    expect(game.get_next_available_move).to eq [0, 1]
+  end
+
+
 
 end

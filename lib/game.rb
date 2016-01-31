@@ -68,6 +68,31 @@ class Game
         move << get_positive_diagonal.index(nil)
       end
     end
+    move.empty? ? nil : move
+  end
+
+  def get_next_available_move
+    move = []
+    if grid[1][1].nil? && move.empty?
+      2.times { move << 1 }
+    elsif grid[0][0].nil? && move.empty?
+      2.times { move << 0 }
+    elsif grid[0][2].nil? && move.empty?
+      move << 0
+      move << 2
+    elsif grid[2][0].nil? && move.empty?
+      move << 2
+      move << 0
+    elsif grid[2][2].nil? && move.empty?
+      2.times { move << 2 }
+    elsif move.empty?
+      grid.each do |row|
+        if row.include?(nil) && move.empty?
+          move << grid.index(row)
+          move << row.index(nil)
+        end
+      end
+    end
     move
   end
 

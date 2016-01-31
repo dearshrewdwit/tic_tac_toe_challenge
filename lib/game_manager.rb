@@ -4,7 +4,7 @@ require './lib/computer_player'
 
 class GameManager
 
-  attr_reader :game, :type, :player1, :player2, :current_player
+  attr_reader :game, :type, :player1, :player2, :current_player, :other_player
 
   def initialize(game=Game)
     @game = game.new
@@ -19,7 +19,7 @@ class GameManager
     if type == 1 || type == 2
       @player2 = player_type_klass.new(:o)
     elsif type == 3
-      player1.is_a? Player ? (@player2 = ComputerPlayer.new(:o)) : (@player2 = Player.new(:o))
+      player1.is_a?(Player) ? (@player2 = ComputerPlayer.new(:o)) : (@player2 = Player.new(:o))
     else
       "invalid game type"
     end
@@ -50,18 +50,19 @@ class GameManager
   end
 
   def computer_play
-    move = get_best_move
-    # check for a win. two of the own symbol same, and nil, in row, col, diag,
-    # check for about to lose. two of the same opponent symbol, and nil, in row, col, diag,
-    # check middle, corners, the rest. specific array positions. Sample the rest. 
-    game.insert(move)
+    move ||= game.find_move(current_player.symbol)
+    move ||= game.find_move(other_player.symbol)
+    move ||= game.get_next_available_move
+    game.insert(current_player.symbol, move[0],move[1])
   end
 
   def get_current_player
     if !player1.played?
       @current_player = player1
+      @other_player = player2
     elsif !player2.played?
       @current_player = player2
+      @other_player = player1
     else
       reset_players
       get_current_player
