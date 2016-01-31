@@ -1,7 +1,9 @@
 class Player
-  attr_reader :name
-  def initialize(name)
-    @name = name
+
+  attr_reader :symbol
+
+  def initialize(symbol)
+    @symbol = symbol
     @played = false
   end
 
@@ -13,8 +15,6 @@ class Player
   def reset
     @played = false
   end
-
-  private
 
   def played?
     @played

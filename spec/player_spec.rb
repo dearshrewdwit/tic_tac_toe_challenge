@@ -2,11 +2,11 @@ require 'player'
 
 describe Player do
 
-  let(:name) { :Edward }
-  subject(:player) { described_class.new(name) }
+  let(:symbol) { :x }
+  subject(:player) { described_class.new(symbol) }
 
-  it "player is initialized wih name" do
-    expect(player.name).to eq name
+  it "player has a symbol" do
+    expect(player.symbol).to eq symbol
   end
 
   it "player can make a move" do

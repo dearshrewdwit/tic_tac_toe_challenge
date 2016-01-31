@@ -110,4 +110,29 @@ describe Game do
     expect(game.winner?).to be true
   end
 
+  it "can find a move in a row" do
+    game.insert(:x, 0, 0)
+    game.insert(:x, 0, 1)
+    expect(game.find_move(:x)).to eq [0, 2]
+  end
+
+  it "can find a move in a column" do
+    game.insert(:x, 0, 0)
+    game.insert(:x, 1, 0)
+    expect(game.find_move(:x)).to eq [2, 0]
+  end
+
+  it "can find a move in a positive diagonal" do
+    game.insert(:x, 0, 0)
+    game.insert(:x, 1, 1)
+    expect(game.find_move(:x)).to eq [2, 2]
+  end
+
+  it "can find a move in a negative diagonal" do
+    game.insert(:x, 2, 0)
+    game.insert(:x, 1, 1)
+    expect(game.find_move(:x)).to eq [0, 2]
+  end
+
+
 end
