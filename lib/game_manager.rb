@@ -14,7 +14,7 @@ class GameManager
   end
 
   def set_game_type(type)
-    raise "invalid game type (1,2,3)" unless type.is_a?(Integer) && type < 4 && type > 0
+    raise "invalid game type (1,2,3)" unless type == 1 || type == 2 || type == 3
     @type = type
   end
 
@@ -26,13 +26,19 @@ class GameManager
   end
 
   def play(row=0, column=0)
-    get_current_player
+    set_current_player
     current_player.is_a?(human_player) ? human_play(row, column) : computer_play
     game.display_grid
-    check_game
+    return check_game if check_game
+    set_next_player
   end
 
   private
+
+  def set_current_player
+    @current_player ||= player1
+    @other_player ||= player2
+  end
 
   def create_new(klass, symbol)
     klass.new(symbol)
@@ -61,7 +67,7 @@ class GameManager
     game.insert(current_player.symbol, move[0],move[1])
   end
 
-  def get_current_player
+  def set_next_player
     @current_player = current_player == player1 ? player2 : player1
     @other_player = other_player == player2 ? player1 : player2
   end

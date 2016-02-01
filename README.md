@@ -5,7 +5,7 @@ Tic-Tac-Toe
 Instructions for use:
 
 - in the terminal `cd` to the appropriate directory
-- `git clone` this repository
+- fork and `git clone` this repository
 - `cd` into the directory
 - run `bundle`
 - run `rspec` to see tests
