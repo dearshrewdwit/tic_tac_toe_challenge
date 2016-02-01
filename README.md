@@ -20,13 +20,15 @@ RULES
 ---
 For every new game:
 
-1. set game type
+1. Set game type.
+  - use an argument: `tic_tac_toe.set_game_type(type)` where type is :
   - 1 = human v human
   - 2 = computer v computer
   - 3 = human v computer
-2. set who moves first
-  - either `:x` or `:o`
-  - and whether you want the `Player` or `ComputerPlayer` to move first
+2. Set who moves first.
+  - use two arguments: `tic_tac_toe.set_player_one(symbol, player_type)` where:
+  - symbol is either `:x` or `:o`
+  - player_type for whether you want the `Player` or `ComputerPlayer` to move first
 3. Play the game!
   - to make a human move, pass in two arguments: `tic_tac_toe.play(row, column)` where row and column are indexed at 0
     - top left is thus `tic_tac_toe.play(0,0)`

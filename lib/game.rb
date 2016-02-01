@@ -124,6 +124,10 @@ class Game
     move
   end
 
+  # def get_move_in_diagonal(diag_type, grid_size)
+  #
+  # end
+
   def get_move_in_negative_diagonal(symbol)
     move = nil
     count = 0

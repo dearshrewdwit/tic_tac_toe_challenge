@@ -10,3 +10,6 @@ Further instructions:
   - This can be playable in any form.  It can be a command line application, a web application, etc.
   - There isn't a deadline.
   - Send a link to the Github repo when you are finished.
+
+- fix turn error bug
+- wrap a few more statements in methods
