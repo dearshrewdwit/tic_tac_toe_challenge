@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+system 'clear'
+puts "Welcome to Tic-Tac-Toe!"
+
+require "./lib/game_manager"
+
+def start_a_new_game
+  @tic_tac_toe = GameManager.new
+end
+
+def choose_version
+  correct_input = false
+  while(!correct_input)
+    puts "\nPHASE 1: Choose a game version!\n"
+    puts """\n\t1 for human v human\n\t2 for human v computer\n\t3 for computer v computer\n"""
+    puts "\nWhat version would you like to play?: "
+    input = gets.chomp.to_i
+    correct_input = true if is_valid?(3, input)
+    system 'clear'
+    puts """Your choice (#{input}) is invalid: Please choose 1, 2 or 3!""" unless correct_input
+  end
+  @tic_tac_toe.set_game_type(input)
+end
+
+def is_valid?(number_of_options, option_number)
+  (1..number_of_options).include?(option_number)
+end
+
+def next_game
+  correct_input = false
+  while(!correct_input)
+    puts "\nEND PHASE: Play again?"
+    puts "\n\t1 to play again\n\t2 to play a different game version\n\t3 to quit game\n"
+    puts "\nWhat would you like to do?: "
+    input = gets.chomp.to_i
+    correct_input = true if is_valid?(3, input)
+    system 'clear'
+    puts """Your choice (#{input}) is invalid: Please choose 1, 2 or 3!""" unless correct_input
+  end
+  play_game if input == 1
+  start_a_new_game if input == 2
+  quit_game("Thanks for playing!") if input == 3
+end
+
+def quit_game(msg)
+  puts msg
+  exit(0)
+end
+
+start_a_new_game
+choose_version
+next_game
+
+incorrect_symbol = true
+while(incorrect_symbol)
+  print "what do you want to be? x or o?: "
+  input = gets.chomp.to_sym
+  puts "Please choose x or o!" unless input == :x || input == :o
+  incorrect_symbol = false
+end
+symbol = input
+
+print "Who moves first? Player or HumanPlayer: "
+player = gets.chomp.downcase
+
+if player == "player"
+  tic_tac_toe.set_player_one(symbol, Player)
+end
+if player == "human"
+  tic_tac_toe.set_player_one(symbol, HumanPlayer)
+end
+
+p tic_tac_toe
+
+print "your move? 1-9: "
+move = gets.chomp
